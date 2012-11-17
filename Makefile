@@ -12,9 +12,11 @@ SRCS = get_grid.f95 grid_coords.f95 inp_par.f95 interpolate.f95 main3d.f95 \
 
 OBJS = $(subst .f95,.o,$(SRCS))
 
-FC = pgf95
+FC = gfortan
+#FC = pgf95
 FFLAGS = -O0 -g -C -I $(shell $(NC_CONFIG) --prefix)/include
-NC_CONFIG = /usr/local/pkg/netcdf/netcdf-4.1.pgi/bin/nc-config
+NC_CONFIG = nc-config
+#NC_CONFIG = /usr/local/pkg/netcdf/netcdf-4.1.pgi/bin/nc-config
 LIBS = $(shell $(NC_CONFIG) --flibs)
 MDEPFLAGS = --cpp --fext=f95 --file=-
 
