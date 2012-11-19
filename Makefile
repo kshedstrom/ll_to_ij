@@ -12,7 +12,7 @@ SRCS = get_grid.f95 grid_coords.f95 inp_par.f95 interpolate.f95 main3d.f95 \
 
 OBJS = $(subst .f95,.o,$(SRCS))
 
-FC = gfortan
+FC = gfortran
 #FC = pgf95
 FFLAGS = -O0 -g -C -I $(shell $(NC_CONFIG) --prefix)/include
 NC_CONFIG = nc-config

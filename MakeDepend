@@ -1,0 +1,36 @@
+get_grid.o: mod_grid.o mod_netcdf.o mod_param.o mod_scalars.o nf_fread2d.o
+get_grid.o: strings.o get_grid.f95
+
+grid_coords.o: interpolate.o mod_floats.o mod_grid.o mod_param.o mod_scalars.o
+grid_coords.o: grid_coords.f95
+
+inp_par.o: mod_kinds.o mod_netcdf.o mod_param.o mod_scalars.o inp_par.f95
+
+interpolate.o: mod_kinds.o mod_param.o mod_scalars.o interpolate.f95
+
+main3d.o: mod_grid.o mod_param.o mod_scalars.o set_depth.o main3d.f95
+
+mod_floats.o: mod_param.o mod_scalars.o mod_floats.f95
+
+mod_grid.o: mod_kinds.o mod_param.o mod_scalars.o mod_grid.f95
+
+
+mod_netcdf.o: mod_kinds.o mod_param.o mod_scalars.o mod_netcdf.f95
+
+mod_param.o: mod_kinds.o mod_param.f95
+
+mod_scalars.o: mod_param.o mod_scalars.f95
+
+nf_fread2d.o: mod_grid.o mod_netcdf.o mod_param.o mod_scalars.o nf_fread2d.f95
+
+read_fltpar.o: mod_floats.o mod_param.o mod_scalars.o read_fltpar.f95
+
+set_depth.o: mod_grid.o mod_param.o mod_scalars.o set_depth.f95
+
+set_scoord.o: mod_grid.o mod_param.o mod_scalars.o set_scoord.f95
+
+
+interpolate_mod.mod: interpolate.o
+nf_fread2d_mod.mod: nf_fread2d.o
+set_depth_mod.mod: set_depth.o
+strings_mod.mod: strings.o

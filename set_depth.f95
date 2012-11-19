@@ -90,8 +90,8 @@
 !-----------------------------------------------------------------------
 !
       IF (Vtransform(ng).eq.1) THEN
-        DO j=UBi,LBi
-          DO i=UBj,LBj
+        DO j=LBj,UBj
+          DO i=LBi,UBi
             z_w(i,j,0)=-h(i,j)
           END DO
           DO k=1,N(ng)
@@ -126,16 +126,18 @@
 !-----------------------------------------------------------------------
 !
       ELSE IF (Vtransform(ng).eq.2) THEN
-        DO j=UBi,LBi
-          DO i=UBj,LBj
+        DO j=LBj,UBj
+          DO i=LBi,UBi
             z_w(i,j,0)=-h(i,j)
           END DO
-          DO k=1,N(ng)
-            cff_r=hc(ng)*SCALARS(ng)%sc_r(k)
-            cff_w=hc(ng)*SCALARS(ng)%sc_w(k)
-            cff1_r=SCALARS(ng)%Cs_r(k)
-            cff1_w=SCALARS(ng)%Cs_w(k)
-            DO i=UBj,LBj
+        END DO
+        DO k=1,N(ng)
+          cff_r=hc(ng)*SCALARS(ng)%sc_r(k)
+          cff_w=hc(ng)*SCALARS(ng)%sc_w(k)
+          cff1_r=SCALARS(ng)%Cs_r(k)
+          cff1_w=SCALARS(ng)%Cs_w(k)
+          DO j=LBj,UBj
+            DO i=LBi,UBi
               hwater=h(i,j)
               hinv=1.0_r8/(hc(ng)+hwater)
               cff2_r=(cff_r+cff1_r*hwater)*hinv

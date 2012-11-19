@@ -146,7 +146,7 @@
 !  Local variable declarations.
 !
       integer :: k
-      logical :: LwrtInfo = .true.
+      logical :: LwrtInfo = .false.
 
       real(r8) :: Aweight, Bweight, Cweight, Cbot, Csur, Hscale
       real(r8) :: ds, exp_bot, exp_sur, sc_r, sc_w

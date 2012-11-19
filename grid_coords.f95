@@ -34,7 +34,7 @@
       real(r8), parameter :: spv = 0.0_r8
 
       real(r8) :: Xstr, Xend, Ystr, Yend, zfloat
-      logical, dimension(Nfloats(ng)) :: my_thread
+      real(r8) :: x, y, z, time
       real(r8), dimension(Nfloats(ng)) :: Iflt, Jflt
       real(r8), dimension(Nfloats(ng)) :: Kflt
 !
@@ -91,16 +91,15 @@
 !
       DO l=1,Nfloats(ng)
           DRIFTER(ng)%Fz0(l)=spv
-          IF (my_thread(l).and.                                         &
-     &        ((DRIFTER(ng)%Tinfo(ixgrd,l).ge.0.5_r8).and.              &
-     &         (DRIFTER(ng)%Tinfo(iygrd,l).ge.0.5_r8).and.              &
-     &         (DRIFTER(ng)%Tinfo(ixgrd,l).le.                          &
-     &          REAL(Lm(ng),r8)+0.5_r8).and.                            &
-     &         (DRIFTER(ng)%Tinfo(iygrd,l).le.                          &
-     &          REAL(Mm(ng),r8)+0.5_r8))) THEN
+          IF ((DRIFTER(ng)%Tinfo(ixgrd,l).ge.0.5_r8).and.               &
+     &        (DRIFTER(ng)%Tinfo(iygrd,l).ge.0.5_r8).and.               &
+     &        (DRIFTER(ng)%Tinfo(ixgrd,l).le.                           &
+     &         REAL(Lm(ng),r8)+0.5_r8).and.                             &
+     &        (DRIFTER(ng)%Tinfo(iygrd,l).le.                           &
+     &         REAL(Mm(ng),r8)+0.5_r8)) THEN
             zfloat=DRIFTER(ng)%Tinfo(izgrd,l)
             DRIFTER(ng)%Fz0(l)=zfloat           ! Save original value
-            Kflt(l)=zfloat
+            Kflt(l)=REAL(N(ng),r8)
             IF (zfloat.le.0.0_r8) THEN
 
 !#ifndef OFFLINE_FLOATS_LATLON
@@ -120,44 +119,55 @@
                 END IF
               END DO
 !#else
-!              Kflt(l)=spv
-!              Ir=INT(DRIFTER(ng)%Tinfo(ixgrd,l))
-!              Jr=INT(DRIFTER(ng)%Tinfo(iygrd,l))
-!
-!              i1=MIN(MAX(Ir  ,0),Lm+1)
-!              i2=MIN(MAX(Ir+1,1),Lm+1)
-!              j1=MIN(MAX(Jr  ,0),Mm+1)
-!              j2=MIN(MAX(Jr+1,0),Mm+1)
-!              p2=REAL(i2-i1,r8)*(FLT(ng)%Tinfo(ixgrd,l)-REAL(i1,r8))
-!              q2=REAL(j2-j1,r8)*(FLT(ng)%Tinfo(iygrd,l)-REAL(j1,r8))
-!              p1=1.0_r8-p2
-!              q1=1.0_r8-q2
-!
-!              cff6=0.0_r8
-!
-!              DO k=N(ng),0,-1
-!                cff7=p1*q1*GRID(ng)%z_w(i1,j1,k)*GRID(ng)%rmask(i1,j1)+ &
-!     &             p2*q1*GRID(ng)%z_w(i2,j1,k)*GRID(ng)%rmask(i2,j1)+   &
-!     &             p1*q2*GRID(ng)%z_w(i1,j2,k)*GRID(ng)%rmask(i1,j2)+   &
-!     &             p2*q2*GRID(ng)%z_w(i2,j2,k)*GRID(ng)%rmask(i2,j2)
-!                cff8=p1*q1*GRID(ng)%rmask(i1,j1)+                       &
-!     &             p2*q1*GRID(ng)%rmask(i2,j1)+                         &
-!     &             p1*q2*GRID(ng)%rmask(i1,j2)+                         &
-!     &             p2*q2*GRID(ng)%rmask(i2,j2)
-!                cff5=0.0_r8
-!                IF (cff8.gt.0.0_r8) cff5=cff7/cff8
-!                IF ((zfloat-cff5)*(cff6-zfloat).ge.0.0_r8) THEN
-!                  Kflt(l)=REAL(k,r8)+(zfloat-cff5)/(cff6-cff5)
-!                END IF
-!                cff6=cff5
-!              END DO
+!             Kflt(l)=spv
+!             Ir=INT(DRIFTER(ng)%Tinfo(ixgrd,l))
+!             Jr=INT(DRIFTER(ng)%Tinfo(iygrd,l))
+
+!             i1=MIN(MAX(Ir  ,0),Lm+1)
+!             i2=MIN(MAX(Ir+1,1),Lm+1)
+!             j1=MIN(MAX(Jr  ,0),Mm+1)
+!             j2=MIN(MAX(Jr+1,0),Mm+1)
+!             p2=REAL(i2-i1,r8)*(FLT(ng)%Tinfo(ixgrd,l)-REAL(i1,r8))
+!             q2=REAL(j2-j1,r8)*(FLT(ng)%Tinfo(iygrd,l)-REAL(j1,r8))
+!             p1=1.0_r8-p2
+!             q1=1.0_r8-q2
+
+!             cff6=0.0_r8
+
+!             DO k=N(ng),0,-1
+!               cff7=p1*q1*GRID(ng)%z_w(i1,j1,k)*GRID(ng)%rmask(i1,j1)+ &
+!    &             p2*q1*GRID(ng)%z_w(i2,j1,k)*GRID(ng)%rmask(i2,j1)+   &
+!    &             p1*q2*GRID(ng)%z_w(i1,j2,k)*GRID(ng)%rmask(i1,j2)+   &
+!    &             p2*q2*GRID(ng)%z_w(i2,j2,k)*GRID(ng)%rmask(i2,j2)
+!               cff8=p1*q1*GRID(ng)%rmask(i1,j1)+                       &
+!    &             p2*q1*GRID(ng)%rmask(i2,j1)+                         &
+!    &             p1*q2*GRID(ng)%rmask(i1,j2)+                         &
+!    &             p2*q2*GRID(ng)%rmask(i2,j2)
+!               cff5=0.0_r8
+!               IF (cff8.gt.0.0_r8) cff5=cff7/cff8
+!               IF ((zfloat-cff5)*(cff6-zfloat).ge.0.0_r8) THEN
+!                 Kflt(l)=REAL(k,r8)+(zfloat-cff5)/(cff6-cff5)
+!               END IF
+!               cff6=cff5
+!             END DO
+!#endif
             END IF
           ELSE
             Kflt(l)=spv
           END IF
       END DO
-        DO l=1,Nfloats(ng)
-          DRIFTER(ng)%Tinfo(izgrd,l)=Kflt(l)
-        END DO
+      DO l=1,Nfloats(ng)
+        DRIFTER(ng)%Tinfo(izgrd,l)=Kflt(l)
+      END DO
+
+! Print results
+      DO l=1,Nfloats(ng)
+        x=DRIFTER(ng)%Tinfo(ixgrd,l)
+        y=DRIFTER(ng)%Tinfo(iygrd,l)
+        z=DRIFTER(ng)%Tinfo(izgrd,l)
+        time=INT(DRIFTER(ng)%Tinfo(itstr,l)/86400.)
+        write(stdout,10) x, y, z, int(time), 50
+      END DO
+  10  FORMAT (3f10.2,2i6)
       RETURN
       END SUBROUTINE grid_coords

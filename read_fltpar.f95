@@ -43,7 +43,7 @@
       character (len=40 ) :: KeyWord
       character (len=256) :: fname, line
       character (len=256), dimension(200) :: Cval
-      logical :: Lwrite = .true.
+      logical :: Lwrite = .false.
       integer, parameter :: inp = 10
 !      integer :: inp = 5
 !
@@ -114,7 +114,8 @@
               ncount(1:Ngrids)=0
               nentry(1:Ngrids)=0
               DO WHILE (.TRUE.)
-                READ (inp,*,ERR=20,END=30) igrid,                       &
+!               READ (inp,*,ERR=20,END=30) igrid,                       &
+                READ (inp,*,END=30) igrid,                              &
      &                                   Fcoor (nentry(igrid)+1,igrid), &
      &                                   Ftype (nentry(igrid)+1,igrid), &
      &                                   Fcount(nentry(igrid)+1,igrid), &
@@ -134,6 +135,7 @@
                 ncount(igrid)=ncount(igrid)+                            &
      &                        Fcount(nentry(igrid)+1,igrid)
                 nentry(igrid)=nentry(igrid)+1
+                if (ncount(1) >= Nfloats(1)) goto 30
               END DO
           END SELECT
         END IF
