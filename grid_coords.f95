@@ -166,7 +166,7 @@
         y=DRIFTER(ng)%Tinfo(iygrd,l)
         z=DRIFTER(ng)%Tinfo(izgrd,l)
         time=INT(DRIFTER(ng)%Tinfo(itstr,l)/86400.)
-        write(stdout,10) x, y, z, int(time), 50
+        write(stdout,10) x, y, z, 5, 0
       END DO
   10  FORMAT (3f10.2,2i6)
       RETURN
