@@ -1,0 +1,5 @@
+This is has code ripped out of ROMS for computing the i,j positions
+of floats initialized with lat,lon positions.
+
+This code has things hard-coded for NEP6, I'm afraid, including reading
+the floats_NEP.in file.
