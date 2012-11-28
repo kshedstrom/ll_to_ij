@@ -114,8 +114,7 @@
               ncount(1:Ngrids)=0
               nentry(1:Ngrids)=0
               DO WHILE (.TRUE.)
-!               READ (inp,*,ERR=20,END=30) igrid,                       &
-                READ (inp,*,END=30) igrid,                              &
+                READ (inp,*,ERR=20,END=30) igrid,                       &
      &                                   Fcoor (nentry(igrid)+1,igrid), &
      &                                   Ftype (nentry(igrid)+1,igrid), &
      &                                   Fcount(nentry(igrid)+1,igrid), &
