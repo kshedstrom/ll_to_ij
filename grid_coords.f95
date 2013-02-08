@@ -78,8 +78,8 @@
      &                     Iflt, Jflt, spv, .FALSE.)
             DO i=1,mc
               l=DRIFTER(ng)%Findex(i)
-              DRIFTER(ng)%Tinfo(ixgrd,l)=Iflt(i) + 1
-              DRIFTER(ng)%Tinfo(iygrd,l)=Jflt(i) + 1
+              DRIFTER(ng)%Tinfo(ixgrd,l)=Iflt(i) - 0.5
+              DRIFTER(ng)%Tinfo(iygrd,l)=Jflt(i) - 0.5
             END DO
           END IF
       END IF
