@@ -2,4 +2,6 @@ This is has code ripped out of ROMS for computing the i,j positions
 of floats initialized with lat,lon positions.
 
 This code has things hard-coded for NEP6, I'm afraid, including reading
-the floats_NEP.in file.
+the floats_NEP.in file. This hard-coding happens in get_grid.f95 for the
+grid filename and in main3d.f95 for the grid dimensions and vertical
+stretching parameters, plus of course the name of the floats.in file.

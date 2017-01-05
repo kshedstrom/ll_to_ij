@@ -1,9 +1,10 @@
 #
 # All new fltplt Makefile needing gmake
 #
-NEED_VERSION := 3.80 3.81 3.82
-$(if $(filter $(MAKE_VERSION),$(NEED_VERSION)),,        \
- $(error This makefile requires one of GNU make version $(NEED_VERSION).))
+ifneq (3.80,$(firstword $(sort $(MAKE_VERSION) 3.80)))
+ $(error This makefile requires GNU make version 3.80 or higher. \
+                 Your current version is: $(MAKE_VERSION))
+endif
 
 SRCS = get_grid.f95 grid_coords.f95 inp_par.f95 interpolate.f95 main3d.f95 \
     mod_floats.f95 mod_grid.f95 mod_kinds.f95 mod_netcdf.f95 mod_param.f95 \
@@ -14,8 +15,8 @@ OBJS = $(subst .f95,.o,$(SRCS))
 
 FC = gfortran
 #FC = pgf95
-FFLAGS = -O0 -g -C -I $(shell $(NC_CONFIG) --prefix)/include
 NC_CONFIG = nc-config
+FFLAGS = -O0 -g -C -I $(shell $(NC_CONFIG) --prefix)/include
 #NC_CONFIG = /usr/local/pkg/netcdf/netcdf-4.1.pgi/bin/nc-config
 LIBS = $(shell $(NC_CONFIG) --flibs)
 MDEPFLAGS = --cpp --fext=f95 --file=-
