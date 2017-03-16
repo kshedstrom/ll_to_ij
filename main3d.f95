@@ -29,8 +29,8 @@
 !  Read in required data, if any, from input NetCDF files.
 !-----------------------------------------------------------------------
 !
-      Lm(ng) = 224
-      Mm(ng) = 640
+      Lm(ng) = 688
+      Mm(ng) = 1088
       N(ng) = 50
       LBi = 0
       LBj = 0

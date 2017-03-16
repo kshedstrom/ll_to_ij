@@ -15,7 +15,7 @@ OBJS = $(subst .f95,.o,$(SRCS))
 
 FC = gfortran
 #FC = pgf95
-NC_CONFIG = nc-config
+NC_CONFIG ?= nc-config
 FFLAGS = -O0 -g -C -I $(shell $(NC_CONFIG) --prefix)/include
 #NC_CONFIG = /usr/local/pkg/netcdf/netcdf-4.1.pgi/bin/nc-config
 LIBS = $(shell $(NC_CONFIG) --flibs)

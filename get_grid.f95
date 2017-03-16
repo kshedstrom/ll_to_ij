@@ -45,7 +45,7 @@
 !-----------------------------------------------------------------------
 !
       IF (exit_flag.ne.NoError) RETURN
-      ncname='/archive/u1/uaf/kate/gridpak/NEP6/NEP6_grd_depth_min_15m.nc'
+      ncname='/archive/u1/uaf/kate/gridpak/Arctic2/grid_Arctic_2.nc'
 !
 !  Check grid file dimensions for consitency
 !
