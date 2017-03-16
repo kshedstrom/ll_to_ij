@@ -5,3 +5,6 @@ This code has things hard-coded for NEP6, I'm afraid, including reading
 the floats_NEP.in file. This hard-coding happens in get_grid.f95 for the
 grid filename and in main3d.f95 for the grid dimensions and vertical
 stretching parameters, plus of course the name of the floats.in file.
+
+Then there's hindices, currently hard-coded for the Arctic, where
+going "north" of the North Pole is problematic.
