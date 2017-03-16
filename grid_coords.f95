@@ -46,6 +46,8 @@
       Iend =Lm(ng)
       JstrR=0
       Jend =Mm(ng)
+      ! ARCTIC ONLY!!!
+      Jend = 760
 !
       LBi=LBOUND(GRID(ng)%h,DIM=1)
       UBi=UBOUND(GRID(ng)%h,DIM=1)
