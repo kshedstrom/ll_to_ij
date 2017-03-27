@@ -18,7 +18,7 @@
 !
 !  Local variable declarations.
 !
-      character (len=256) :: varname
+      character (len=*) :: varname
       logical :: find_file
 
       integer :: Npts, Nval
